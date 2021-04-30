@@ -1,0 +1,20 @@
+name: Build-mac
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: pip3 install esptool==2.8 pyinstaller
+    - run: pyinstaller /usr/local/bin/esptool.py --onefile --clean
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v2
+      with:
+        name: esptool.2.8-darwin-11
+        path: ./dist/esptool
+        retention-days: 5
+    
